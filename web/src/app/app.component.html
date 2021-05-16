@@ -1,0 +1,73 @@
+<div style="text-align:center">
+  <div class="container">
+
+    For training model: <input type="checkbox" (change)="training_change()">
+    <br>
+    <font size="+2" *ngIf="model_training">Single data upload</font>
+    <form name="recording">
+
+      <button (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" style="cursor: pointer;background-color: green;color: white;font-size: 20px;"> Start Recording </button>
+      <button (click)="stopRecording()" class="btn btn-danger" *ngIf="recording" style="cursor: pointer;background-color: red;color: white;font-size: 20px;"> Stop Recording </button>
+
+       <div class="clearfix"></div>
+       <audio controls="" *ngIf="url">
+          <source [src]="sanitize(url)" type="audio/wav">
+       </audio>
+    </form>
+
+    <mat-spinner *ngIf="isloader" style="margin:0 auto;"></mat-spinner>
+
+    <p>
+     <label>OR</label>
+    </p>
+
+    <div class="form-group">
+     <label for="file">  Choose File  </label>
+     <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+    </div>
+    <br>
+    <div *ngIf="model_training">
+      Transcript: <input type="text" (input) = "record_transcript($event.target.value)">
+      <br>
+      <br>
+      <font size="+2">Multiple data manipulation</font>
+
+
+      <p>
+        Including all audio files:<input type = "checkbox" (change) = "audioinclude()">
+       <a href="#" (click)="downloadData()">Download data</a>
+     </p>
+
+     <label for="data"> Choose zip file of dataset  </label>
+     <input type="file" id="data" (change)="handleDataInput($event.target.files)">
+     <br>
+
+    </div>
+    <br>
+    <p>
+      <label>Choose a model:</label>
+      <select id="model_name" (change)=model_change($event)>
+        <option *ngFor="let model of model_list" [ngValue]="model">{{model}}</option>
+      </select>
+    </p>
+    <p *ngIf="model_training">
+      Including check_point files:<input type = "checkbox" (change) = "checking_detail_include()">
+     <a href="##" (click)="downloadtraining()">Download training details</a>
+   </p>
+
+
+   <label for="data"> Choose training specification txt file </label>
+   <input type="file" id="data" (change)="handleTrainingInput($event.target.files)">
+     <div class="form-group" *ngIf="model_training">
+       <button (click)="training_click()"  style="cursor: pointer;background-color: red;color: white;font-size: 20px;"> Start training </button>
+
+     </div>
+
+
+     <p>
+       <label>Text Output</label>
+     </p>
+
+     <textarea id = "myTextArea" class="col-lg-3 center-block" rows = "3" cols = "80"> {{text}} </textarea>
+  </div>
+</div>
