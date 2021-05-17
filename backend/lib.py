@@ -54,7 +54,7 @@ def editing_csv():
 
 
 def create_new_model_dir(cwd):
-    cwd = cwd +'/checkpoint/'
+    cwd = cwd +'/check_point/'
     i = 1
     folder_name = cwd + "model" + str(i)
 
