@@ -69,13 +69,18 @@ def training_setup():
     audio_file = request.files['audio']
     audio_file.save("file.wav")
 
-    destination = "audios/" + time.strftime("%Y%m%d-%H%M%S") + ".wav"
+    destination = "audios/train/" + time.strftime("%Y%m%d-%H%M%S") + ".wav"
     downsample("file.wav",destination)
     transcript = request.form['text']
-    addr = os.getcwd()+destination
+    addr = os.getcwd()+'/'+destination
     size = os.path.getsize(destination)
 
     transcript = re.sub(r'[^a-z\']',' ',transcript.lower())
+
+    df = pd.DataFrame(np.array([[addr,size,transcript]]),
+                   columns=['wav_filename', 'wav_filesize', 'transcript'])
+
+    df.to_csv('audios/train.csv',index = False,sep=',', encoding='utf-8',mode = 'a',header=False)
 
     return jsonify(username = "files are saved")
 

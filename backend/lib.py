@@ -51,3 +51,16 @@ def editing_csv():
     path_correction(df_training,cwd).to_csv('audios/train.csv',index = False,sep=',', encoding='utf-8')
     path_correction(df_dev,cwd).to_csv('audios/valid.csv',index = False,sep=',', encoding='utf-8')
     path_correction(df_test,cwd).to_csv('audios/test.csv',index = False,sep=',', encoding='utf-8')
+
+
+def create_new_model_dir(cwd):
+    cwd = cwd +'/checkpoint/'
+    i = 1
+    folder_name = cwd + "model" + str(i)
+
+    while True:
+        if not os.path.exists(folder_name):
+            os.mkdir(folder_name)
+            break
+        i += 1
+        folder_name = cwd + "model" + str(i)
